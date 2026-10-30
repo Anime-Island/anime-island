@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Monkey D. Luffy | Anime Island</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;1,800&family=Barlow:wght@500;600&family=Dela+Gothic+One&display=swap">
+<link rel="stylesheet" href="../assets/character.css">
+</head>
+<body>
+<div id="app" class="wrap"></div>
+
+<script>
+/* =====================================================================
+   CHARACTER PAGE DATA: this is the only part you edit for this character.
+   The layout, colors and styling come from ../assets/character.css and character.js,
+   so every character page looks the same.
+
+   Images (in the ../images/ folder):
+     render      images/<slug>.png          (same file the roster uses)
+     name logo   images/<slug>-logo.png     (optional, replaces the big text name)
+
+   Section blocks you can use inside any section:
+     { type: "text",      heading, body }                 body = text, or a list of paragraphs
+     { type: "list",      heading, items: [..] }          bullet list
+     { type: "terms",     heading, items: [{term, text}] }
+     { type: "steps",     items: [{heading, body}] }      ordered cards (arc, key moments)
+     { type: "relations", items: [{name, tag, tone, text}] }   tone: "friendly" | "conflict" | omit
+     { type: "moves",     items: [{slot, name, variants, variantLabel}] }
+     { type: "note",      label, text }                   small status line (label optional)
+   Add  wide: true  to a text or list block to make it span the full width.
+   ===================================================================== */
+window.CHARACTER = {
+  slug: "monkey-d-luffy",
+  name: "Monkey D. Luffy",
+  status: "Season 1 Contestant",
+  colors: ["#ff3b30", "#7d0f12"],   // same as this character's roster card
+  accent: "#ffd23f",
+  // framing: { scale: 1, x: "0%", y: "0%" },   // optional: nudge the render if needed
+
+  facts: [
+    { label: "Original Series", value: "One Piece" },
+    { label: "Role", value: "Main contestant" },
+    { label: "Affiliation (Canon)", value: "Straw Hat Pirates" },
+    { label: "Aliases/Titles (Canon)", value: ["Straw Hat Luffy", "Captain of the Straw Hat Pirates"] }
+  ],
+
+  sections: [
+    {
+      id: "personality",
+      title: "Canon Personality",
+      blocks: [
+        {
+          type: "text",
+          heading: "General Personality",
+          wide: true,
+          body: [
+            "Luffy is cheerful, carefree, adventurous, and determined. He loves eating meat, having fun, meeting new ppl, and going on adventures. He can be pretty childish sometimes, especially when food is involved, and he usually acts before thinking.",
+            "But when things get serious, Luffy knows when to stop messing around. He cares alot about his friends and won't just stand there when someone he cares about is in trouble."
+          ]
+        },
+        {
+          type: "terms",
+          heading: "Beliefs and Values",
+          items: [
+            { term: "Freedom", text: "Luffy wants to be free and sees becoming Pirate King as the way to achieve that." },
+            { term: "Friendship", text: "He cares alot about his friends and would go out of his way to help them." },
+            { term: "Dreams", text: "He respects ppl who have dreams and refuses to give up on his own." },
+            { term: "Cruelty", text: "He hates seeing ppl abuse their power or hurt others for no reason." },
+            { term: "Independence", text: "He doesn't like being controlled or having ppl tell him how to live." }
+          ]
+        },
+        {
+          type: "text",
+          heading: "How He Treats Others",
+          body: [
+            "Luffy doesn't really care about someone's status or reputation. He mostly judges ppl by how they act. He can become friends with ppl others might not trust, but if someone is cruel or hurts his friends, he'll have a problem with them.",
+            "He doesn't usually try to be a leader, but ppl still end up following him bc of how he acts and how much he cares about them."
+          ]
+        },
+        {
+          type: "list",
+          heading: "Important Writing Details",
+          items: [
+            "Keep his dialogue casual and straight to the point.",
+            "Don't make him some genius who plans everything out.",
+            "He can be pretty clueless sometimes.",
+            "His instincts about ppl can be surprisingly good.",
+            "He LOVES food and can get distracted by it.",
+            "He doesn't care much about looking cool.",
+            "He gets serious fast when someone he cares about is in danger.",
+            "Freedom matters more to him than fame or money."
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "profile",
+      title: "Anime Island Profile",
+      blocks: [
+        {
+          type: "text",
+          heading: "Role in the Competition",
+          body: "Luffy is one of the 12 contestants in Anime Island Season 1."
+        },
+        {
+          type: "text",
+          heading: "Personality During the Show",
+          body: [
+            "Luffy sees Anime Island as an adventure and is mostly just excited to be there. He wants to have fun, meet ppl, and see what the other contestants can do.",
+            "He's not really the type to sit around making plans to eliminate everyone. He'll usually just do what he thinks is right and deal with whatever happens after."
+          ]
+        },
+        {
+          type: "list",
+          heading: "Goals",
+          items: [
+            "Have fun in the competition.",
+            "Meet new ppl.",
+            "Test himself against strong opponents.",
+            "Make friends, even tho they're competing against each other.",
+            "Make it far without losing himself along the way."
+          ]
+        },
+        {
+          type: "list",
+          heading: "Strengths as a Contestant",
+          items: [
+            "Gets along with ppl pretty easily.",
+            "Doesn't give up easily.",
+            "Can inspire ppl through his actions.",
+            "Isn't afraid to stand up to someone who's being a jerk.",
+            "Stays true to himself."
+          ]
+        },
+        {
+          type: "list",
+          heading: "Weaknesses as a Contestant",
+          items: [
+            "Acts before thinking.",
+            "Isn't great at complicated plans.",
+            "Gets distracted easily, especially by food.",
+            "Doesn't always think about the consequences of his actions.",
+            "Could have a hard time dealing with eliminating someone he actually likes."
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "arc",
+      title: "Character Arc",
+      blocks: [
+        {
+          type: "steps",
+          items: [
+            {
+              heading: "Starting Point",
+              body: "Luffy starts Anime Island excited to compete. He sees it as a fun adventure and doesn't think too much about how complicated things could get."
+            },
+            {
+              heading: "Main Conflict",
+              body: "As the show goes on, Luffy starts getting closer to the other contestants. The problem is that they're all competing against each other, so making friends might make certain decisions harder."
+            },
+            {
+              heading: "Development",
+              body: [
+                "Luffy might eventually realize that he can't treat EVERYTHING like a normal adventure. There could be times where he has to make hard choices involving ppl he cares about.",
+                "He should still feel like Luffy tho. The competition getting serious doesn't mean he suddenly becomes a completely different person."
+              ]
+            },
+            {
+              heading: "Potential Ending",
+              body: "Whether Luffy wins or loses, his ending should focus on the ppl he's met and the experiences he's had, not just whether he beat everyone else."
+            }
+          ]
+        },
+        { type: "note", label: "Status", text: "Just an idea for now. His actual ending hasn't been decided." }
+      ]
+    },
+
+    {
+      id: "relationships",
+      title: "Relationships",
+      blocks: [
+        {
+          type: "relations",
+          items: [
+            {
+              name: "Naruto Uzumaki",
+              tag: "Potential Friendship",
+              tone: "friendly",
+              text: "Both are energetic and determined, and they could end up becoming pretty good friends."
+            },
+            {
+              name: "Sosuke Aizen",
+              tag: "Potential Conflict",
+              tone: "conflict",
+              text: "Luffy usually follows his instincts instead of falling for complicated plans, which could make things difficult for Aizen."
+            },
+            {
+              name: "Ryomen Sukuna",
+              tag: "Potential Conflict",
+              tone: "conflict",
+              text: "Luffy doesn't like ppl who hurt others or abuse their power, so he could end up having problems with Sukuna."
+            },
+            {
+              name: "Other Contestants",
+              tag: "Undecided",
+              text: "His other relationships can develop as the show goes on."
+            }
+          ]
+        },
+        { type: "note", label: "Status", text: "These are just ideas rn, not confirmed relationships." }
+      ]
+    },
+
+    {
+      id: "moveset",
+      title: "Moveset",
+      blocks: [
+        {
+          type: "moves",
+          items: [
+            { slot: 1, name: "Red Hawk", variants: "Air" },
+            { slot: 2, name: "Bazooka", variants: "Air Extend" },
+            { slot: 3, name: "Roc Gatling", variants: "Hold / Air", variantLabel: "Variants" },
+            { slot: 4, name: "Grizzly Magnum", variants: "Air" }
+          ]
+        },
+        { type: "note", text: "Move mechanics and animations will be added once they're finalized." }
+      ]
+    },
+
+    {
+      id: "moments",
+      title: "Key Moments & Scenes",
+      blocks: [
+        {
+          type: "steps",
+          items: [
+            {
+              heading: "Introduction",
+              body: "Show Luffy being excited to join Anime Island. His first scene should make it obvious that he's here to have fun and see what happens."
+            },
+            {
+              heading: "Early Competition",
+              body: "Show him talking to the other contestants and treating them like potential friends instead of immediately seeing everyone as an enemy."
+            },
+            {
+              heading: "Major Turning Point",
+              body: "A possible turning point could be when Luffy realizes that being friends with other contestants might make the competition harder for him."
+            },
+            {
+              heading: "Biggest Moment",
+              body: "He could have a major scene where he stands up for another contestant, even if it ends up hurting his own chances of winning."
+            },
+            {
+              heading: "Elimination or Finale",
+              body: [
+                "If Luffy gets eliminated, his ending should focus on what he's experienced and the connections he's made.",
+                "If he makes it to the finale, his ending should still reflect what matters to him instead of making winning his entire personality."
+              ]
+            }
+          ]
+        },
+        { type: "note", label: "Status", text: "Ideas only. Nothing here is confirmed yet." }
+      ]
+    },
+
+    {
+      id: "production",
+      title: "Production Notes",
+      blocks: [
+        {
+          type: "list",
+          heading: "Writing Guidelines",
+          items: [
+            "Keep Luffy energetic and expressive.",
+            "Let him be funny, but don't make every scene a joke.",
+            "Make his serious moments actually matter.",
+            "Don't make him act like some mastermind.",
+            "Let his instincts help him even when he doesn't fully understand something.",
+            "Let his friendships develop naturally.",
+            "Winning shouldn't matter more to him than everything he stands for."
+          ]
+        },
+        {
+          type: "list",
+          heading: "Important Details to Preserve",
+          items: [
+            "His dream of becoming Pirate King.",
+            "How much he values freedom.",
+            "His loyalty to his friends.",
+            "His love of food and adventure.",
+            "His impulsive personality.",
+            "How serious he gets when someone he cares about is in trouble."
+          ]
+        },
+        {
+          type: "list",
+          heading: "Ideas to Explore",
+          items: [
+            "How he handles competing against his friends.",
+            "Whether he can stay close to ppl while trying to win.",
+            "How he reacts to contestants who manipulate others.",
+            "Whether his straightforward personality helps him or gets him into trouble."
+          ]
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="../assets/character.js"></script>
+</body>
+</html>
