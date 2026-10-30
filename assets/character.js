@@ -53,6 +53,18 @@
   bar.appendChild(back);
   app.appendChild(bar);
 
+  /* ----- main navigation (Characters is the current section) ----- */
+  var tabs = h("nav", "tabs");
+  tabs.setAttribute("aria-label", "Main");
+  var tabStory = h("a", null, "Story");
+  tabStory.href = "../story.html";
+  var tabChars = h("a", null, "Characters");
+  tabChars.href = ROSTER_URL;
+  tabChars.setAttribute("aria-current", "page");
+  tabs.appendChild(tabStory);
+  tabs.appendChild(tabChars);
+  app.appendChild(tabs);
+
   /* ----- hero ----- */
   var wrap = h("div", "hero-wrap");
   var hero = h("section", "hero");
