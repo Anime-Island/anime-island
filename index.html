@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Anime Island</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;1,800&family=Barlow:wght@500;600&family=Dela+Gothic+One&display=swap">
 <style>
 /* Layout: wide horizontal page. Slim brand bar, one title row, then a 6 x 2 roster of
@@ -97,6 +98,62 @@ body::before {
   background: var(--sun);
   padding: 5px 18px 5px 14px;
   clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+
+/* ---------- Main navigation (Story / Characters) ---------- */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-top: -8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 22px;
+  font-family: var(--font-name);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.tabs a::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -1px;
+  height: 4px;
+  background: var(--sun);
+  transform: skewX(-30deg) scaleX(0);
+  transform-origin: 0 100%;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.tabs a:hover { color: var(--text); background: rgba(255, 255, 255, 0.04); }
+.tabs a:hover::after { transform: skewX(-30deg) scaleX(0.35); opacity: 0.6; }
+
+.tabs a:focus-visible { outline: 2px solid var(--sun); outline-offset: -2px; }
+
+.tabs a[aria-current="page"] {
+  color: var(--text);
+  background: linear-gradient(180deg, transparent, rgba(255, 179, 71, 0.12));
+}
+
+.tabs a[aria-current="page"]::after { transform: skewX(-30deg) scaleX(1); opacity: 1; }
+
+@media (max-width: 520px) {
+  .tabs { gap: 0; }
+  .tabs a { flex: 1; padding: 0 12px; font-size: 18px; }
 }
 
 /* ---------- Title row ---------- */
@@ -333,7 +390,7 @@ body::before {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 13.5cqi;
+  max-height: 17cqi;
   object-fit: contain;
   object-position: 0 50%;
   transform: skewY(-4deg);
@@ -391,6 +448,155 @@ body::before {
 
 .slot:active { transform: translateY(-3px); }
 
+/* ---------- Host (kept separate from the 12 contestants) ---------- */
+.host { display: flex; flex-direction: column; gap: 18px; margin-top: 10px; }
+
+.host-card {
+  --c1: #4a4636;
+  --c2: #0b0b0f;
+  --accent: #ffb347;
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  color: inherit;
+  text-decoration: none;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55));
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.host-frame {
+  padding: 2px;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.55), var(--accent) 40%, var(--c2));
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+  transition: background 0.18s ease;
+}
+
+.host-face {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(120px, 210px) minmax(0, 1fr);
+  background: linear-gradient(160deg, var(--c1), var(--c2));
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - var(--cut) + 2px) 0, 100% calc(var(--cut) - 2px), 100% 100%, 0 100%);
+}
+
+.host-face::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: repeating-conic-gradient(from 8deg at 18% 80%, rgba(255, 179, 71, 0.13) 0deg 7deg, transparent 7deg 16deg);
+  -webkit-mask-image: radial-gradient(circle at 18% 80%, #000 0%, transparent 62%);
+  mask-image: radial-gradient(circle at 18% 80%, #000 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.host-art {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 250 / 333;
+  container-type: inline-size;
+}
+
+.host-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
+  transition: transform 0.22s ease;
+  transform-origin: 50% 100%;
+}
+
+.host-card.no-render .host-art img { display: none; }
+.host-card.no-render .ghost { display: flex; }
+
+.host-info {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px clamp(16px, 3vw, 32px) 20px 8px;
+}
+
+.host-role {
+  font-family: var(--font-name);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1a1204;
+  background: var(--accent);
+  padding: 3px 16px 3px 10px;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+.host-name {
+  font-family: var(--font-name);
+  font-style: italic;
+  font-weight: 800;
+  font-size: clamp(38px, 6vw, 64px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.5);
+  overflow-wrap: anywhere;
+}
+
+.host-logo {
+  display: none;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 72px;
+  filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.5));
+}
+
+.host-card.has-logo .host-logo { display: block; }
+.host-card.has-logo .host-name { display: none; }
+
+.host-open {
+  margin-top: 4px;
+  font-family: var(--font-name);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  padding: 5px 16px 5px 12px;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.host-card:hover,
+.host-card:focus-visible {
+  transform: translateY(-5px);
+  filter: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 16px rgba(255, 179, 71, 0.35));
+  outline: none;
+}
+
+.host-card:hover .host-frame,
+.host-card:focus-visible .host-frame { background: linear-gradient(150deg, #fff, var(--accent) 55%, var(--c1)); }
+
+.host-card:hover .host-art img,
+.host-card:focus-visible .host-art img { transform: scale(1.05); }
+
+.host-card:hover .host-open,
+.host-card:focus-visible .host-open { background: var(--accent); border-color: var(--accent); color: #1a1204; }
+
+@media (max-width: 519px) {
+  .host-face { grid-template-columns: 120px minmax(0, 1fr); }
+  .host-open { font-size: 15px; }
+}
+
 /* ---------- Footer ---------- */
 .foot {
   display: flex;
@@ -403,7 +609,8 @@ body::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .slot, .frame, .render img, .plate::before { transition: none; }
+  .slot, .frame, .render img, .plate::before, .tabs a, .tabs a::after, .host-card, .host-frame, .host-art img, .host-open { transition: none; }
+  .host-card:hover, .host-card:focus-visible { transform: none; }
   .slot:hover, .slot:focus-visible, .slot:active { transform: none; }
 }
 </style>
@@ -417,6 +624,11 @@ body::before {
     <span class="season-tag">Season 1</span>
   </header>
 
+  <nav class="tabs" aria-label="Main">
+    <a href="story.html">Story</a>
+    <a href="index.html" aria-current="page">Characters</a>
+  </nav>
+
   <section aria-labelledby="roster-title">
     <div class="heading">
       <h2 id="roster-title">Season 1 roster</h2>
@@ -425,6 +637,32 @@ body::before {
   </section>
 
   <ul class="roster" id="roster" aria-label="Season 1 contestants"></ul>
+
+  <section class="host" aria-labelledby="host-title">
+    <div class="heading">
+      <h2 id="host-title">The host</h2>
+      <p>Not a contestant</p>
+    </div>
+    <a class="host-card no-render" href="characters/kenjaku.html" aria-label="Kenjaku, host of Anime Island. Open his page.">
+      <div class="host-frame">
+        <div class="host-face">
+          <div class="host-art">
+            <div class="ghost">
+              <svg viewBox="0 0 100 120" aria-hidden="true" fill="currentColor"><circle cx="50" cy="34" r="21"/><path d="M6 120c0-26 18-44 44-44s44 18 44 44z"/></svg>
+              <span>Render soon</span>
+            </div>
+            <img alt="" draggable="false">
+          </div>
+          <div class="host-info">
+            <span class="host-role">Host of Anime Island</span>
+            <img class="host-logo" alt="" draggable="false">
+            <span class="host-name">Kenjaku</span>
+            <span class="host-open">View host page</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </section>
 
   <footer class="foot">
     <span>Anime Island, a Roblox anime show.</span>
@@ -452,12 +690,12 @@ body::before {
 const ROSTER = [
   { slug: "joseph-joestar",   name: "Joseph Joestar",   colors: ["#2aa57f", "#0c3f3c"], accent: "#a56bff" },
   { slug: "monkey-d-luffy",   name: "Monkey D. Luffy",  colors: ["#ff3b30", "#7d0f12"], accent: "#ffd23f", page: "characters/monkey-d-luffy.html" },
-  { slug: "naruto-uzumaki",   name: "Naruto Uzumaki",   colors: ["#ff9a1f", "#a03c07"], accent: "#1f7bff", page: "characters/naruto-uzumaki.html" },
-  { slug: "weak-kingsley",    name: "Weak Kingsley",    colors: ["#9ccc3c", "#36540f"], accent: "#f7e04a", page: "characters/weak-kingsley.html" },
+  { slug: "naruto-uzumaki",   name: "Naruto Uzumaki",   colors: ["#ff9a1f", "#a03c07"], accent: "#1f7bff", scale: 0.97, page: "characters/naruto-uzumaki.html" },
+  { slug: "frieren",          name: "Frieren",          colors: ["#3fc1b0", "#0f4a4d"], accent: "#ffe28a" },
   { slug: "ryomen-sukuna",    name: "Ryomen Sukuna",    colors: ["#c2185b", "#2a0720"], accent: "#ff9bc2", page: "characters/ryomen-sukuna.html" },
-  { slug: "gilgamesh",        name: "Gilgamesh",        colors: ["#d4a017", "#3b2503"], accent: "#ff4d4d", page: "characters/gilgamesh.html" },
+  { slug: "rudo",             name: "Rudo",             colors: ["#b5c928", "#3f4a0c"], accent: "#ff8a1f", scale: 0.98 },
   { slug: "saiki-kusuo",      name: "Saiki Kusuo",      colors: ["#35c4dd", "#0f4f78"], accent: "#ff8fc2", page: "characters/saiki-kusuo.html" },
-  { slug: "vegeta",           name: "Vegeta",           colors: ["#3a63f0", "#0c1a66"], accent: "#e8efff", page: "characters/vegeta.html" },
+  { slug: "vegeta",           name: "Vegeta",           colors: ["#3a63f0", "#0c1a66"], accent: "#e8efff", scale: 0.97, page: "characters/vegeta.html" },
   { slug: "sosuke-aizen",     name: "Sosuke Aizen",     colors: ["#8a5cf0", "#2b1670"], accent: "#d8c8ff", page: "characters/sosuke-aizen.html" },
   { slug: "killua-zoldyck",   name: "Killua Zoldyck",   colors: ["#5d86b5", "#1a2d4d"], accent: "#4de3ff", page: "characters/killua-zoldyck.html" },
   { slug: "saitama",          name: "Saitama",          colors: ["#ffe04a", "#d98b00"], accent: "#e5212b", page: "characters/saitama.html" },
@@ -466,6 +704,42 @@ const ROSTER = [
 /* ===================================================================== */
 
 (function () {
+  // Crops empty transparent space around a logo so a logo saved on a big canvas still displays at full size.
+  // If the browser blocks reading the image (for example when opened straight from a folder), the logo shows as-is.
+  function trimLogo(img) {
+    if (img._trimmed) return;
+    img._trimmed = true;
+    try {
+      var w = img.naturalWidth, h = img.naturalHeight;
+      var c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      var g = c.getContext("2d");
+      g.drawImage(img, 0, 0);
+      var d = g.getImageData(0, 0, w, h).data;
+      var x0 = w, y0 = h, x1 = -1, y1 = -1, x, y;
+      for (y = 0; y < h; y++) {
+        for (x = 0; x < w; x++) {
+          if (d[(y * w + x) * 4 + 3] > 8) {
+            if (x < x0) x0 = x;
+            if (x > x1) x1 = x;
+            if (y < y0) y0 = y;
+            if (y > y1) y1 = y;
+          }
+        }
+      }
+      if (x1 < 0) return;
+      var pad = 3;
+      x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad);
+      x1 = Math.min(w - 1, x1 + pad); y1 = Math.min(h - 1, y1 + pad);
+      var cw = x1 - x0 + 1, ch = y1 - y0 + 1;
+      if (cw * ch > w * h * 0.9) return;
+      var o = document.createElement("canvas");
+      o.width = cw; o.height = ch;
+      o.getContext("2d").drawImage(c, x0, y0, cw, ch, 0, 0, cw, ch);
+      img.src = o.toDataURL("image/png");
+    } catch (e) { /* keep the original image */ }
+  }
+
   var list = document.getElementById("roster");
 
   var SILHOUETTE =
@@ -529,12 +803,26 @@ const ROSTER = [
     nameLogo.alt = "";
     nameLogo.decoding = "async";
     nameLogo.draggable = false;
-    nameLogo.addEventListener("load", function () { li.classList.add("has-logo"); });
+    nameLogo.addEventListener("load", function () { li.classList.add("has-logo"); trimLogo(nameLogo); });
     nameLogo.addEventListener("error", function () { li.classList.remove("has-logo"); });
     li.querySelector(".plate").insertBefore(nameLogo, li.querySelector(".name"));
     nameLogo.src = c.nameImage || ("images/" + c.slug + "-logo.png");
 
     list.appendChild(li);
   });
+
+  // Host card (separate from the roster): images/kenjaku.png and optional images/kenjaku-logo.png
+  var hostCard = document.querySelector(".host-card");
+  if (hostCard) {
+    var hostImg = hostCard.querySelector(".host-art img");
+    hostImg.addEventListener("load", function () { hostCard.classList.remove("no-render"); });
+    hostImg.addEventListener("error", function () { hostCard.classList.add("no-render"); });
+    hostImg.src = "images/kenjaku.png";
+
+    var hostLogo = hostCard.querySelector(".host-logo");
+    hostLogo.addEventListener("load", function () { hostCard.classList.add("has-logo"); trimLogo(hostLogo); });
+    hostLogo.addEventListener("error", function () { hostCard.classList.remove("has-logo"); });
+    hostLogo.src = "images/kenjaku-logo.png";
+  }
 })();
 </script>
