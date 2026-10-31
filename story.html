@@ -7,6 +7,221 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;1,800&family=Barlow:wght@500;600&family=Dela+Gothic+One&display=swap">
 <link rel="stylesheet" href="assets/character.css">
+<style>
+/* Story page: black, white and gold. Shared header, tabs and section layout come from assets/character.css. */
+:root { --accent: #ffb347; }
+
+/* ---------- Hero ---------- */
+.story-hero-wrap { filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.55)); }
+
+.story-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  min-height: clamp(320px, 31vw, 460px);
+  background: linear-gradient(160deg, #2b2412, #08080c 72%);
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% calc(100% - 44px), 0 100%);
+}
+
+.story-hero::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: repeating-conic-gradient(from 8deg at 80% 86%, rgba(255, 179, 71, 0.14) 0deg 7deg, transparent 7deg 16deg);
+  -webkit-mask-image: radial-gradient(circle at 80% 86%, #000 0%, transparent 62%);
+  mask-image: radial-gradient(circle at 80% 86%, #000 0%, transparent 62%);
+  pointer-events: none;
+}
+
+.story-hero-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 44px clamp(20px, 3.4vw, 52px) 76px;
+  min-width: 0;
+}
+
+.story-title {
+  margin: 0;
+  font-family: var(--font-name);
+  font-style: italic;
+  font-weight: 800;
+  font-size: clamp(42px, 6vw, 96px);
+  line-height: 0.92;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: #fff;
+  text-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.story-lede {
+  margin: 0;
+  max-width: 48ch;
+  color: var(--body);
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.6;
+}
+
+.story-art {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 24px clamp(16px, 3vw, 44px) 56px 0;
+}
+
+.story-art svg { width: 100%; max-width: 440px; height: auto; display: block; }
+
+/* ---------- Competition steps ---------- */
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; }
+
+/* ---------- Island ---------- */
+.waves {
+  height: 26px;
+  margin-top: 18px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='26' viewBox='0 0 60 26'%3E%3Cpath d='M0 13q15-14 30 0t30 0' fill='none' stroke='%23ffb347' stroke-width='2.4' stroke-linecap='round' opacity='.75'/%3E%3C/svg%3E") repeat-x left center;
+}
+
+/* ---------- Host ---------- */
+.host-feature {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) minmax(0, 1fr);
+  gap: 24px 32px;
+  align-items: center;
+}
+
+.host-pic {
+  position: relative;
+  aspect-ratio: 250 / 333;
+  max-width: 100%;
+  background: linear-gradient(160deg, #4a4636, #0b0b0f);
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+
+.host-pic::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: repeating-conic-gradient(from 8deg at 50% 86%, rgba(255, 179, 71, 0.14) 0deg 7deg, transparent 7deg 16deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 86%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(circle at 50% 86%, #000 0%, transparent 70%);
+}
+
+.host-pic img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.45));
+}
+
+.host-pic.no-render img { display: none; }
+
+.host-pic .ghost-s {
+  position: absolute;
+  inset: 0 0 8%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.host-pic.no-render .ghost-s { display: flex; }
+.host-pic .ghost-s svg { width: 56%; height: auto; color: #fff; opacity: 0.16; }
+
+.host-copy { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.host-copy h3 { margin: 0; }
+.host-copy p { margin: 0; }
+
+/* ---------- Contestants ---------- */
+.faces { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin: 6px 0 18px; padding: 0; list-style: none; }
+
+.face {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(160deg, var(--c1), var(--c2));
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.face img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.45));
+}
+
+.face span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 7px 6px;
+  background: linear-gradient(0deg, rgba(5, 6, 14, 0.9), rgba(5, 6, 14, 0));
+  font-family: var(--font-name);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Mystery ---------- */
+.mystery {
+  border: 1px solid rgba(255, 179, 71, 0.35);
+  background:
+    linear-gradient(180deg, rgba(255, 179, 71, 0.07), transparent 70%),
+    var(--panel);
+}
+
+.mystery .quote {
+  margin: 0 0 12px;
+  font-family: var(--font-name);
+  font-style: italic;
+  font-weight: 800;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: #fff;
+  max-width: 20ch;
+}
+
+@media (max-width: 900px) {
+  .story-hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .story-hero::before { background: repeating-conic-gradient(from 8deg at 50% 100%, rgba(255, 179, 71, 0.14) 0deg 7deg, transparent 7deg 16deg); -webkit-mask-image: radial-gradient(circle at 50% 100%, #000 0%, transparent 62%); mask-image: radial-gradient(circle at 50% 100%, #000 0%, transparent 62%); }
+  .story-hero-copy { padding-bottom: 8px; }
+  .story-art { padding: 0 24px 44px; }
+  .story-art svg { max-width: 320px; }
+  .faces { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .host-feature { grid-template-columns: minmax(0, 1fr); }
+  .host-pic { width: 180px; }
+}
+
+@media (max-width: 520px) {
+  .faces { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -21,15 +236,126 @@
     <a href="index.html">Characters</a>
   </nav>
 
-  <main class="sections">
-    <section class="section" id="story">
-      <div class="section-head">
-        <h2>Story</h2>
+  <div class="story-hero-wrap">
+    <section class="story-hero" aria-label="Anime Island">
+      <div class="story-hero-copy">
+        <span class="status-tag">Season 1</span>
+        <h2 class="story-title">Twelve contestants. One island. One winner.</h2>
+        <p class="story-lede">A reality competition show where anime characters from different universes live, compete and clash on a single island.</p>
       </div>
+      <div class="story-art" aria-hidden="true">
+        <svg viewBox="0 0 420 320" fill="none">
+          <defs>
+            <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffd08a"/>
+              <stop offset="1" stop-color="#ff9b2f"/>
+            </linearGradient>
+            <clipPath id="above"><rect x="0" y="0" width="420" height="192"/></clipPath>
+          </defs>
+          <g clip-path="url(#above)">
+            <circle cx="210" cy="150" r="124" fill="url(#sun)"/>
+            <g fill="#0b0a10">
+              <rect x="60" y="136" width="300" height="5"/>
+              <rect x="60" y="154" width="300" height="7"/>
+              <rect x="60" y="173" width="300" height="10"/>
+            </g>
+          </g>
+          <g stroke="#f4f6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 206q25-16 50 0t50 0t50 0t50 0t50 0t50 0t50 0t50 0" opacity="0.95"/>
+            <path d="M-15 238q25-16 50 0t50 0t50 0t50 0t50 0t50 0t50 0t50 0t50 0" opacity="0.6"/>
+            <path d="M10 270q25-16 50 0t50 0t50 0t50 0t50 0t50 0t50 0t50 0" opacity="0.3"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+  </div>
+
+  <ul class="jump" aria-label="Sections">
+    <li><a href="#about">About</a></li>
+    <li><a href="#competition">The Competition</a></li>
+    <li><a href="#island">The Island</a></li>
+    <li><a href="#host">The Host</a></li>
+    <li><a href="#contestants">The Contestants</a></li>
+    <li><a href="#mystery">The Mystery</a></li>
+  </ul>
+
+  <main class="sections">
+    <section class="section" id="about">
+      <div class="section-head"><h2>About Anime Island</h2></div>
       <div class="blocks">
         <div class="panel wide">
-          <h3>Coming soon</h3>
-          <p>Episodes, plots, events and story information will be organized here once they are added.</p>
+          <p>Anime Island is a reality competition show hosted by Kenjaku. Twelve contestants from different anime universes arrive on the island to compete in challenges, meet new people, form friendships and rivalries, and fight for the title of Anime Island's winner.</p>
+          <p>What starts as an entertaining competition filled with comedy, arguments, and unexpected interactions slowly reveals that there's more to Anime Island than meets the eye.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="competition">
+      <div class="section-head"><h2>The Competition</h2></div>
+      <div class="blocks">
+        <div class="flow" style="grid-column: 1 / -1;">
+          <div class="panel">
+            <div class="step-head"><span class="step-n">1</span><h3>Challenges</h3></div>
+            <p>Contestants compete in challenges on the island.</p>
+          </div>
+          <div class="panel">
+            <div class="step-head"><span class="step-n">2</span><h3>Eliminations</h3></div>
+            <p>As the competition continues, contestants face eliminations.</p>
+          </div>
+          <div class="panel">
+            <div class="step-head"><span class="step-n">3</span><h3>The final two</h3></div>
+            <p>The eliminations continue until only two contestants remain.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="island">
+      <div class="section-head"><h2>The Island</h2></div>
+      <div class="blocks">
+        <div class="panel wide">
+          <p>The island is the setting for the whole competition. It's where the twelve contestants live, and where they compete.</p>
+          <div class="waves" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="host">
+      <div class="section-head"><h2>The Host</h2></div>
+      <div class="blocks">
+        <div class="panel wide">
+          <div class="host-feature">
+            <div class="host-pic no-render" id="host-pic">
+              <div class="ghost-s"><svg viewBox="0 0 100 120" aria-hidden="true" fill="currentColor"><circle cx="50" cy="34" r="21"/><path d="M6 120c0-26 18-44 44-44s44 18 44 44z"/></svg></div>
+              <img alt="Kenjaku" draggable="false">
+            </div>
+            <div class="host-copy">
+              <h3>Kenjaku</h3>
+              <p>Kenjaku is the host of Anime Island. He is not a contestant. He hosts the show that the twelve contestants have entered.</p>
+              <a class="btn" href="characters/kenjaku.html">Meet the host</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contestants">
+      <div class="section-head"><h2>The Contestants</h2></div>
+      <div class="blocks">
+        <div class="panel wide">
+          <p>Twelve anime characters are competing in Season 1, each from a different anime.</p>
+          <ul class="faces" id="faces" aria-label="Season 1 contestants"></ul>
+          <a class="btn" href="index.html">Meet the contestants</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mystery">
+      <div class="section-head"><h2>The Mystery</h2></div>
+      <div class="blocks">
+        <div class="panel wide mystery">
+          <p class="quote">Things aren't always what they seem.</p>
+          <p>On Anime Island, it pays to keep your eyes open.</p>
         </div>
       </div>
     </section>
@@ -40,5 +366,51 @@
     <span>Anime Island, a Roblox anime show.</span>
   </footer>
 </div>
+
+<script>
+/* The 12 contestants shown in "The Contestants". This list mirrors the roster in index.html:
+   if a contestant changes there, change it here too. Renders load from images/<slug>.png. */
+var FACES = [
+  { slug: "joseph-joestar",  name: "Joseph Joestar",  colors: ["#2aa57f", "#0c3f3c"] },
+  { slug: "monkey-d-luffy",  name: "Monkey D. Luffy", colors: ["#ff3b30", "#7d0f12"] },
+  { slug: "naruto-uzumaki",  name: "Naruto Uzumaki",  colors: ["#ff9a1f", "#a03c07"] },
+  { slug: "frieren",         name: "Frieren",         colors: ["#3fc1b0", "#0f4a4d"] },
+  { slug: "ryomen-sukuna",   name: "Ryomen Sukuna",   colors: ["#c2185b", "#2a0720"] },
+  { slug: "rudo",            name: "Rudo",            colors: ["#b5c928", "#3f4a0c"] },
+  { slug: "saiki-kusuo",     name: "Saiki Kusuo",     colors: ["#35c4dd", "#0f4f78"] },
+  { slug: "vegeta",          name: "Vegeta",          colors: ["#3a63f0", "#0c1a66"] },
+  { slug: "sosuke-aizen",    name: "Sosuke Aizen",    colors: ["#8a5cf0", "#2b1670"] },
+  { slug: "killua-zoldyck",  name: "Killua Zoldyck",  colors: ["#5d86b5", "#1a2d4d"] },
+  { slug: "saitama",         name: "Saitama",         colors: ["#ffe04a", "#d98b00"] },
+  { slug: "chizome-akaguro", name: "Chizome Akaguro", colors: ["#4a4f63", "#0d0f18"] }
+];
+
+(function () {
+  var list = document.getElementById("faces");
+  FACES.forEach(function (c) {
+    var li = document.createElement("li");
+    li.className = "face";
+    li.style.setProperty("--c1", c.colors[0]);
+    li.style.setProperty("--c2", c.colors[1]);
+    var img = new Image();
+    img.alt = "";
+    img.draggable = false;
+    img.addEventListener("error", function () { img.style.display = "none"; });
+    li.appendChild(img);
+    img.src = "images/" + c.slug + ".png";
+    var label = document.createElement("span");
+    label.textContent = c.name;
+    li.appendChild(label);
+    list.appendChild(li);
+  });
+
+  // Host picture: images/kenjaku.png
+  var pic = document.getElementById("host-pic");
+  var hi = pic.querySelector("img");
+  hi.addEventListener("load", function () { pic.classList.remove("no-render"); });
+  hi.addEventListener("error", function () { pic.classList.add("no-render"); });
+  hi.src = "images/kenjaku.png";
+})();
+</script>
 </body>
 </html>
