@@ -457,7 +457,7 @@ body::before {
   --accent: #ffb347;
   display: block;
   width: 100%;
-  max-width: 640px;
+  max-width: 860px;
   color: inherit;
   text-decoration: none;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55));
@@ -525,17 +525,40 @@ body::before {
   padding: 20px clamp(16px, 3vw, 32px) 20px 8px;
 }
 
-.host-role {
+.host-label,
+.host-facts dt {
   font-family: var(--font-name);
-  font-style: italic;
-  font-weight: 800;
-  font-size: 16px;
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #1a1204;
-  background: var(--accent);
-  padding: 3px 16px 3px 10px;
-  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.host-label { margin-bottom: -6px; }
+
+.host-facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px 22px;
+  width: 100%;
+}
+
+.host-facts dd {
+  margin: 1px 0 0;
+  font-family: var(--font-name);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.host-desc {
+  max-width: 52ch;
+  color: var(--body);
+  font-size: 15px;
+  line-height: 1.55;
 }
 
 .host-name {
@@ -640,8 +663,7 @@ body::before {
 
   <section class="host" aria-labelledby="host-title">
     <div class="heading">
-      <h2 id="host-title">The host</h2>
-      <p>Not a contestant</p>
+      <h2 id="host-title">THE HOST</h2>
     </div>
     <a class="host-card no-render" href="characters/kenjaku.html" aria-label="Kenjaku, host of Anime Island. Open his page.">
       <div class="host-frame">
@@ -654,9 +676,15 @@ body::before {
             <img alt="" draggable="false">
           </div>
           <div class="host-info">
-            <span class="host-role">Host of Anime Island</span>
+            <span class="host-label">Name</span>
             <img class="host-logo" alt="" draggable="false">
             <span class="host-name">Kenjaku</span>
+            <dl class="host-facts">
+              <div><dt>Role</dt><dd>Host of Anime Island</dd></div>
+              <div><dt>Affiliation</dt><dd>Anime Island</dd></div>
+              <div><dt>Status</dt><dd>Host</dd></div>
+            </dl>
+            <span class="host-desc">Kenjaku is the host of Anime Island. He welcomes the contestants, presents challenges, and oversees the competition.</span>
             <span class="host-open">View host page</span>
           </div>
         </div>
