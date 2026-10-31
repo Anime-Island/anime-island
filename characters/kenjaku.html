@@ -13,57 +13,31 @@
 
 <script>
 /* HOST PAGE DATA: the only part to edit for the host.
-   Same layout as the contestant pages, but this is the host, not a contestant.
-   Block types and options are explained at the top of monkey-d-luffy.html (this page also supports
-   { type: "links", items: [{ label, href }] } for buttons).
-   Images: ../images/kenjaku.png (render) and ../images/kenjaku-logo.png (optional name logo).
-   This is a public page: only add information viewers should know before watching. */
+   Same layout as the contestant pages, but this is the host, not a contestant (no contestant number, no moveset).
+   All text here is supplied by the show's creator. Do not add or reword anything.
+   Images: ../images/kenjaku.png (render) and ../images/kenjaku-logo.png (optional name logo). */
 window.CHARACTER = {
   slug: "kenjaku",
   name: "Kenjaku",
-  status: "Host of Anime Island",
   colors: ["#4a4636", "#0b0b0f"],
   accent: "#ffb347",
 
   facts: [
-    { label: "Original Series", value: "Jujutsu Kaisen" },
-    { label: "Role", value: "Host" }
+    { label: "Role", value: "Host of Anime Island" },
+    { label: "Affiliation", value: "Anime Island" },
+    { label: "Status", value: "Host" }
   ],
 
   sections: [
     {
-      id: "host",
-      title: "The Host",
+      id: "description",
+      title: "Description",
       blocks: [
         {
           type: "text",
           wide: true,
-          body: [
-            "Kenjaku is the host of Anime Island, the reality competition show featuring 12 contestants from different anime universes.",
-            "He is not one of the contestants."
-          ]
+          body: "Kenjaku is the host of Anime Island. He welcomes the contestants, presents challenges, and oversees the competition."
         }
-      ]
-    },
-
-    {
-      id: "show",
-      title: "On Anime Island",
-      blocks: [
-        {
-          type: "text",
-          heading: "Role",
-          wide: true,
-          body: "Kenjaku hosts Anime Island and is not competing."
-        },
-        {
-          type: "links",
-          items: [
-            { label: "Read the story", href: "../story.html" },
-            { label: "Meet the contestants", href: "../index.html" }
-          ]
-        },
-        { type: "note", text: "More information about Kenjaku will be added here." }
       ]
     }
   ]
