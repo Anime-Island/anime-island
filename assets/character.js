@@ -164,7 +164,7 @@
     li.appendChild(a);
     jump.appendChild(li);
   });
-  app.appendChild(jump);
+  if ((C.sections || []).length > 1) app.appendChild(jump);
 
   /* ----- block renderers ----- */
   var R = {
