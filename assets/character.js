@@ -10,6 +10,42 @@
   var IMG = "../images/";
   var ROSTER_URL = "../index.html";
 
+  // Crops empty transparent space around a logo so a logo saved on a big canvas still displays at full size.
+  // If the browser blocks reading the image (for example when opened straight from a folder), the logo shows as-is.
+  function trimLogo(img) {
+    if (img._trimmed) return;
+    img._trimmed = true;
+    try {
+      var w = img.naturalWidth, h = img.naturalHeight;
+      var c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      var g = c.getContext("2d");
+      g.drawImage(img, 0, 0);
+      var d = g.getImageData(0, 0, w, h).data;
+      var x0 = w, y0 = h, x1 = -1, y1 = -1, x, y;
+      for (y = 0; y < h; y++) {
+        for (x = 0; x < w; x++) {
+          if (d[(y * w + x) * 4 + 3] > 8) {
+            if (x < x0) x0 = x;
+            if (x > x1) x1 = x;
+            if (y < y0) y0 = y;
+            if (y > y1) y1 = y;
+          }
+        }
+      }
+      if (x1 < 0) return;
+      var pad = 3;
+      x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad);
+      x1 = Math.min(w - 1, x1 + pad); y1 = Math.min(h - 1, y1 + pad);
+      var cw = x1 - x0 + 1, ch = y1 - y0 + 1;
+      if (cw * ch > w * h * 0.9) return;
+      var o = document.createElement("canvas");
+      o.width = cw; o.height = ch;
+      o.getContext("2d").drawImage(c, x0, y0, cw, ch, 0, 0, cw, ch);
+      img.src = o.toDataURL("image/png");
+    } catch (e) { /* keep the original image */ }
+  }
+
   function h(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -53,6 +89,18 @@
   bar.appendChild(back);
   app.appendChild(bar);
 
+  /* ----- main navigation (Characters is the current section) ----- */
+  var tabs = h("nav", "tabs");
+  tabs.setAttribute("aria-label", "Main");
+  var tabStory = h("a", null, "Story");
+  tabStory.href = "../story.html";
+  var tabChars = h("a", null, "Characters");
+  tabChars.href = ROSTER_URL;
+  tabChars.setAttribute("aria-current", "page");
+  tabs.appendChild(tabStory);
+  tabs.appendChild(tabChars);
+  app.appendChild(tabs);
+
   /* ----- hero ----- */
   var wrap = h("div", "hero-wrap");
   var hero = h("section", "hero");
@@ -68,7 +116,7 @@
   var nameLogo = new Image();
   nameLogo.className = "name-logo";
   nameLogo.alt = "";
-  nameLogo.addEventListener("load", function () { nameEl.classList.add("has-logo"); });
+  nameLogo.addEventListener("load", function () { nameEl.classList.add("has-logo"); trimLogo(nameLogo); });
   nameLogo.addEventListener("error", function () { nameEl.classList.remove("has-logo"); });
   nameEl.appendChild(nameLogo);
   nameEl.appendChild(nameText);
@@ -181,6 +229,18 @@
         if (it.note) p.appendChild(h("p", "move-note", it.note));
         frag.appendChild(p);
       });
+    },
+    links: function (b) {
+      var p = h("div", "panel wide");
+      if (b.heading) p.appendChild(h("h3", null, b.heading));
+      var row = h("div", "btn-row");
+      b.items.forEach(function (it) {
+        var a = h("a", "btn", it.label);
+        a.href = it.href;
+        row.appendChild(a);
+      });
+      p.appendChild(row);
+      return p;
     },
     note: function (b) {
       var n = h("div", "note");
