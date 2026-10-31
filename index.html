@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <title>Anime Island</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;1,800&family=Barlow:wght@500;600&family=Dela+Gothic+One&display=swap">
 <style>
 /* Layout: wide horizontal page. Slim brand bar, one title row, then a 6 x 2 roster of
@@ -97,6 +98,62 @@ body::before {
   background: var(--sun);
   padding: 5px 18px 5px 14px;
   clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+
+/* ---------- Main navigation (Story / Characters) ---------- */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-top: -8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 22px;
+  font-family: var(--font-name);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.tabs a::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -1px;
+  height: 4px;
+  background: var(--sun);
+  transform: skewX(-30deg) scaleX(0);
+  transform-origin: 0 100%;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.tabs a:hover { color: var(--text); background: rgba(255, 255, 255, 0.04); }
+.tabs a:hover::after { transform: skewX(-30deg) scaleX(0.35); opacity: 0.6; }
+
+.tabs a:focus-visible { outline: 2px solid var(--sun); outline-offset: -2px; }
+
+.tabs a[aria-current="page"] {
+  color: var(--text);
+  background: linear-gradient(180deg, transparent, rgba(255, 179, 71, 0.12));
+}
+
+.tabs a[aria-current="page"]::after { transform: skewX(-30deg) scaleX(1); opacity: 1; }
+
+@media (max-width: 520px) {
+  .tabs { gap: 0; }
+  .tabs a { flex: 1; padding: 0 12px; font-size: 18px; }
 }
 
 /* ---------- Title row ---------- */
@@ -333,7 +390,7 @@ body::before {
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 13.5cqi;
+  max-height: 17cqi;
   object-fit: contain;
   object-position: 0 50%;
   transform: skewY(-4deg);
@@ -403,7 +460,7 @@ body::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .slot, .frame, .render img, .plate::before { transition: none; }
+  .slot, .frame, .render img, .plate::before, .tabs a, .tabs a::after { transition: none; }
   .slot:hover, .slot:focus-visible, .slot:active { transform: none; }
 }
 </style>
@@ -416,6 +473,11 @@ body::before {
     </h1>
     <span class="season-tag">Season 1</span>
   </header>
+
+  <nav class="tabs" aria-label="Main">
+    <a href="story.html">Story</a>
+    <a href="index.html" aria-current="page">Characters</a>
+  </nav>
 
   <section aria-labelledby="roster-title">
     <div class="heading">
@@ -453,9 +515,9 @@ const ROSTER = [
   { slug: "joseph-joestar",   name: "Joseph Joestar",   colors: ["#2aa57f", "#0c3f3c"], accent: "#a56bff" },
   { slug: "monkey-d-luffy",   name: "Monkey D. Luffy",  colors: ["#ff3b30", "#7d0f12"], accent: "#ffd23f", page: "characters/monkey-d-luffy.html" },
   { slug: "naruto-uzumaki",   name: "Naruto Uzumaki",   colors: ["#ff9a1f", "#a03c07"], accent: "#1f7bff", page: "characters/naruto-uzumaki.html" },
-  { slug: "weak-kingsley",    name: "Weak Kingsley",    colors: ["#9ccc3c", "#36540f"], accent: "#f7e04a", page: "characters/weak-kingsley.html" },
+  { slug: "frieren",          name: "Frieren",          colors: ["#3fc1b0", "#0f4a4d"], accent: "#ffe28a" },
   { slug: "ryomen-sukuna",    name: "Ryomen Sukuna",    colors: ["#c2185b", "#2a0720"], accent: "#ff9bc2", page: "characters/ryomen-sukuna.html" },
-  { slug: "gilgamesh",        name: "Gilgamesh",        colors: ["#d4a017", "#3b2503"], accent: "#ff4d4d", page: "characters/gilgamesh.html" },
+  { slug: "rudo",             name: "Rudo",             colors: ["#b5c928", "#3f4a0c"], accent: "#ff8a1f" },
   { slug: "saiki-kusuo",      name: "Saiki Kusuo",      colors: ["#35c4dd", "#0f4f78"], accent: "#ff8fc2", page: "characters/saiki-kusuo.html" },
   { slug: "vegeta",           name: "Vegeta",           colors: ["#3a63f0", "#0c1a66"], accent: "#e8efff", page: "characters/vegeta.html" },
   { slug: "sosuke-aizen",     name: "Sosuke Aizen",     colors: ["#8a5cf0", "#2b1670"], accent: "#d8c8ff", page: "characters/sosuke-aizen.html" },
